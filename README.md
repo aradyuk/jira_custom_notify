@@ -1,6 +1,6 @@
 # Custom script which works with JIRA API:
 
-### Gem list:
+### 1. Gem list:
 #
 > 'pp'
 
@@ -11,7 +11,7 @@
 ```sh
 gem install $gem_name
 ```
-### Create ".env" in the root and add credentials data and settings:
+### 2. Create ".env" in the root and add credentials data and settings:
 
 #JIRA:
 
