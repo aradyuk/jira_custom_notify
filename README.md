@@ -19,3 +19,6 @@
 > JIRA_PASS=''
 
 * MAIL:
+
+> MAIL_USER='' 
+> MAIL_PASS=''
