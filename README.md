@@ -2,13 +2,11 @@
 
 ### Gem list:
 #
-#
 > 'pp'
 
 > 'jira-ruby'
 
 > 'dotenv'
-#
 #
 ```sh
 gem install $gem_name
