@@ -1,8 +1,8 @@
 # Custom script which works with JIRA API:
 
-##### Gem list:
+#### Gem list:
 
-##### Create ".env" in the root for credential data and settings:
+#### Create ".env" in the root for credential data and settings:
 
 * JIRA:
 
