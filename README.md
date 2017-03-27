@@ -7,7 +7,9 @@
 * JIRA:
 
 > JIRA_URI=''
+
 > JIRA_USER=''
+
 > JIRA_PASS=''
 
 * MAIL:
