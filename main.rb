@@ -6,6 +6,7 @@ require 'dotenv'
 require 'mail'
 require 'colorize'
 require 'json'
+require 'date'
 
 # Create .env in the root and specify your vars there, then load it here:
 Dotenv.load('.env')
@@ -37,6 +38,22 @@ jira_options = {
 # Make connect:
 client = JIRA::Client.new(jira_options)
 
+# task is overdue after number of days:
+days = 5
+
+# Count of weekend for period of time:
+def weekday(days)
+t = Date.today
+arr = []
+ days.times do
+  arr << "ok" if t.saturday? || t.sunday?; t = t - 1
+ end
+  arr.count
+end
+
+# Count of weekend during our five days:
+differ = weekday(days)
+
 # Build array with issues from all projects except those that are PATTERN's:
 issues = []; client.Issue.all.each { |i| issues << i if i.project.name.include?('Pattern') != true && i.customfield_10100}
 
@@ -44,7 +61,7 @@ issues = []; client.Issue.all.each { |i| issues << i if i.project.name.include?(
 date_today = Time.now.to_s[0..9]
 
 # Delete if difference between start and current date less than 5 days:
-issues.delete_if { |i| (Date.parse(date_today.gsub(/\-/, '/')).mjd - Date.parse(i.customfield_10100[0..9].gsub(/\-/, '/')).mjd) < 5 }
+issues.delete_if { |i| (Date.parse(date_today.gsub(/\-/, '/')).mjd - Date.parse(i.customfield_10100[0..9].gsub(/\-/, '/')).mjd - differ) < 5 }
 
 # Keep if state is 'Open' or 'To do':
 issues.keep_if { |i| i.status.name.match('Open') || i.status.name.match('To do') }
