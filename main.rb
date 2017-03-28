@@ -11,7 +11,7 @@ Dotenv.load('.env')
 
 # Set some email configurations:
 mail_options = {
-						:address              => ENV['MAIL_ADDRESS'],
+			:address              => ENV['MAIL_ADDRESS'],
             :port                 => ENV['MAIL_PORT'],
             :user_name            => ENV['MAIL_USER'],
             :password             => ENV['MAIL_PASS'],
@@ -46,22 +46,22 @@ issues.delete_if { |i| (Date.parse(date_today.gsub(/\-/, '/')).mjd - Date.parse(
 # Keep if state is 'Open' or 'To do':
 issues.keep_if { |i| i.status.name.match('Open') || i.status.name.match('To do') }
 
+# Print statistic:
 puts "---------------------------------------"
 
-puts "\n Overdue issues count: #{issues.count}".underline
+puts "\n Overdue issues count: #{issues.count}".underline.red
 
 issues.each do |i|
-	puts "\n Issue: #{i.summary} (Project: #{i.project.name})".red
-	puts " issue status: #{i.status.name}"
+
+	puts "\n Issue: #{i.summary.green} (Project: #{i.project.name})"
+	puts " issue status: #{i.status.name.blue}"
 	puts " Date today:          #{date_today}"
 	puts " Planning start date: #{i.customfield_10100[0..9]}"
 	puts " Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
 
-
 puts "\n---------------------------------------"
 
 # Send mail:
-
  Mail.deliver do
        to 'aliaksandr.radziuk@altoros.com'
      from ENV['MAIL_ADDRESS']
@@ -72,7 +72,7 @@ Issue: #{i.summary} (Project: #{i.project.name}
 issue status: #{i.status.name}
 Date today:            #{date_today}
 Planning start date: #{i.customfield_10100[0..9]}
-Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
+Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
 
  end
 end
