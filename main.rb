@@ -12,7 +12,7 @@ Dotenv.load('.env')
 
 # Set some email configurations:
 mail_options = {
-      			:address              => ENV['MAIL_ADDRESS'],
+      	    :address              => ENV['MAIL_ADDRESS'],
             :port                 => ENV['MAIL_PORT'],
             :user_name            => ENV['MAIL_USER'],
             :password             => ENV['MAIL_PASS'],
@@ -49,7 +49,7 @@ issues.delete_if { |i| (Date.parse(date_today.gsub(/\-/, '/')).mjd - Date.parse(
 # Keep if state is 'Open' or 'To do':
 issues.keep_if { |i| i.status.name.match('Open') || i.status.name.match('To do') }
 
-# Print statistic # Should comment to "Send mail" section if you don't want to display script statistic:
+# Print statistic # Should comment to "Send mail" section if you don't want to display statistic in the terminal:
 puts "---------------------------------------"
 
 puts "\n Overdue issues count: #{issues.count}".underline.red
