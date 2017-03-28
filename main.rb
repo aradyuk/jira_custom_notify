@@ -69,14 +69,13 @@ issues.each do |i|
  Mail.deliver do
        to 'aliaksandr.radziuk@altoros.com'
      from ENV['MAIL_ADDRESS']
-  subject 'Overdue issues in Jira-Marketing'
+  subject 'Jira-Marketing [Overdue issues]'
      body "
-	Overdue issues count: #{issues.count} (More than 5 days without any action)
-	Issue:                        #{i.summary} (Project: #{i.project.name}
-	Issue status:               #{i.status.name}
-	Assign to:                   #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}
-	Planning start date:     #{i.customfield_10100[0..9]}
-	Date today:                #{date_today}
-	Link:                          http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
+Issue:                        #{i.summary} (Project: #{i.project.name})
+Issue status:               #{i.status.name}
+Assign to:                   #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}
+Planning start date:     #{i.customfield_10100[0..9]}
+Date today:                #{date_today}
+Link:                          http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
  end
 end
