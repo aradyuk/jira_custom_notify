@@ -7,6 +7,10 @@
 > 'jira-ruby'
 
 > 'dotenv'
+
+> 'json'
+
+> 'colorize'
 #
 ```sh
 gem install $gem_name

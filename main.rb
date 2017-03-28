@@ -5,6 +5,7 @@ require 'jira-ruby'
 require 'dotenv'
 require 'mail'
 require 'colorize'
+require 'json'
 
 # Create .env in the root and specify your vars there, then load it here:
 Dotenv.load('.env')
@@ -53,26 +54,27 @@ puts "\n Overdue issues count: #{issues.count}".underline.red
 
 issues.each do |i|
 
-	puts "\n Issue: #{i.summary.green} (Project: #{i.project.name})"
-	puts " issue status: #{i.status.name.blue}"
-	puts " Date today:          #{date_today}"
+	puts "\n Issue:               #{i.summary.green} (Project: #{i.project.name})"
+	puts " issue status:        #{i.status.name.blue}"
+	puts " Assign to:           #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}"
 	puts " Planning start date: #{i.customfield_10100[0..9]}"
-	puts " Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
+	puts " Date today:          #{date_today}"
+	puts " Link:                http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
 
 puts "\n---------------------------------------"
 
-# Send mail:
+ # Send mail:
  Mail.deliver do
        to 'aliaksandr.radziuk@altoros.com'
      from ENV['MAIL_ADDRESS']
   subject 'Overdue issues in Jira-Marketing'
      body "
-Overdue issues count: #{issues.count} (More than 5 days without any action)
-Issue: #{i.summary} (Project: #{i.project.name}
-issue status: #{i.status.name}
-Date today:             #{date_today}
-Planning start date: #{i.customfield_10100[0..9]}
-Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
-
+	Overdue issues count: #{issues.count} (More than 5 days without any action)
+	Issue:                        #{i.summary} (Project: #{i.project.name}
+	Issue status:               #{i.status.name}
+	Assign to:                   #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}
+	Planning start date:     #{i.customfield_10100[0..9]}
+	Date today:                #{date_today}
+	Link:                          http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
  end
 end
