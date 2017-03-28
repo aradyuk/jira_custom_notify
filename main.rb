@@ -4,6 +4,7 @@ require 'pp'
 require 'jira-ruby'
 require 'dotenv'
 require 'mail'
+require 'colorize'
 
 # Create .env in the root and specify your vars there, then load it here:
 Dotenv.load('.env')
@@ -47,29 +48,31 @@ issues.keep_if { |i| i.status.name.match('Open') || i.status.name.match('To do')
 
 puts "---------------------------------------"
 
-puts "\n Overdue issues count: #{issues.count}"
+puts "\n Overdue issues count: #{issues.count}".underline
 
 issues.each do |i|
-	puts "\n Issue: #{i.summary} (Project: #{i.project.name})"
+	puts "\n Issue: #{i.summary} (Project: #{i.project.name})".red
 	puts " issue status: #{i.status.name}"
 	puts " Date today:          #{date_today}"
 	puts " Planning start date: #{i.customfield_10100[0..9]}"
-	puts " Link: #{i.remotelink.all}"
+	puts " Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
 
 
 puts "\n---------------------------------------"
 
 # Send mail:
 
-# Mail.deliver do
-#       to 'aliaksandr.radziuk@altoros.com'
-#     from ENV['MAIL_ADDRESS']
-#  subject 'Overdue issues in Jira-Marketing'
-#     body "\n 
-# 		 	Overdue issues count: #{issues.count} (More than 5 days without any action)\n
-#			Issue: #{i.summary} (Project: #{i.project.name}\n
-#			issue status: #{i.status.name}\n
-#			Date today:          #{date_today}\n
-#			Planning start date: #{i.customfield_10100[0..9].gsub(/\-/, '/')}\n
-#			Link: #{i.remotelink.all}"; end
+ Mail.deliver do
+       to 'aliaksandr.radziuk@altoros.com'
+     from ENV['MAIL_ADDRESS']
+  subject 'Overdue issues in Jira-Marketing'
+     body "
+Overdue issues count: #{issues.count} (More than 5 days without any action)
+Issue: #{i.summary} (Project: #{i.project.name}
+issue status: #{i.status.name}
+Date today:            #{date_today}
+Planning start date: #{i.customfield_10100[0..9]}
+Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
+
+ end
 end
