@@ -12,7 +12,7 @@ Dotenv.load('.env')
 
 # Set some email configurations:
 mail_options = {
-			:address              => ENV['MAIL_ADDRESS'],
+      			:address              => ENV['MAIL_ADDRESS'],
             :port                 => ENV['MAIL_PORT'],
             :user_name            => ENV['MAIL_USER'],
             :password             => ENV['MAIL_PASS'],
@@ -21,7 +21,8 @@ mail_options = {
 					}
 
 Mail.defaults do
- delivery_method :smtp, mail_options; end
+ delivery_method :smtp, mail_options
+end
 
 # Set some configurations for JIRA access:
 jira_options = {
@@ -39,6 +40,7 @@ client = JIRA::Client.new(jira_options)
 # Build array with issues from all projects except those that are PATTERN's:
 issues = []; client.Issue.all.each { |i| issues << i if i.project.name.include?('Pattern') != true && i.customfield_10100}
 
+# Set today's date:
 date_today = Time.now.to_s[0..9]
 
 # Delete if difference between start and current date less than 5 days:
@@ -47,7 +49,7 @@ issues.delete_if { |i| (Date.parse(date_today.gsub(/\-/, '/')).mjd - Date.parse(
 # Keep if state is 'Open' or 'To do':
 issues.keep_if { |i| i.status.name.match('Open') || i.status.name.match('To do') }
 
-# Print statistic:
+# Print statistic # Should comment to "Send mail" section if you don't want to display script statistic:
 puts "---------------------------------------"
 
 puts "\n Overdue issues count: #{issues.count}".underline.red
@@ -61,7 +63,7 @@ issues.each do |i|
 	puts " Date today:          #{date_today}"
 	puts " Link:                http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
 
-puts "\n---------------------------------------"
+ puts "\n---------------------------------------"
 
  # Send mail:
  Mail.deliver do
