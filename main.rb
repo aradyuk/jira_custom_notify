@@ -70,7 +70,7 @@ puts "\n---------------------------------------"
 Overdue issues count: #{issues.count} (More than 5 days without any action)
 Issue: #{i.summary} (Project: #{i.project.name}
 issue status: #{i.status.name}
-Date today:            #{date_today}
+Date today:             #{date_today}
 Planning start date: #{i.customfield_10100[0..9]}
 Link: http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
 
