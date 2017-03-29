@@ -5,6 +5,14 @@ Create list with overdue tasks and send to PM.
 ### Requirements ###
 ruby 2.3
 
+```sh
+apt-add-repository ppa:brightbox/ruby-ng
+```
+
+```sh
+apt-get update && apt-get install ruby2.3 ruby2.3-dev -y
+```
+
 ### Gem list ###
 `pp`
 `jira-ruby`
