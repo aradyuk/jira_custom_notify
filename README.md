@@ -1,36 +1,32 @@
-# Custom script which works with JIRA API:
+# Notification script which works with JIRA API: #
 
-### 1. Gem list:
-#
-> 'pp'
+Create list with overdue tasks and send to PM.
 
-> 'jira-ruby'
+### Requirements ###
+ruby 2.3
 
-> 'dotenv'
+### Gem list ###
+`pp`
+`jira-ruby`
+`dotenv`
+`mail`
+`colorize`
+`json`
+`date`
 
-> 'json'
-
-> 'colorize'
-#
 ```sh
 gem install $gem_name
 ```
-### 2. Create ".env" in the root and add credentials data and settings:
 
+### Create ".env" in the root and add credentials data and settings: ###
+```
 #JIRA:
-
-> JIRA_URI=
-
-> JIRA_USER=
-
-> JIRA_PASS=
-
+JIRA_URI=''
+JIRA_USER=''
+JIRA_PASS=''
 #MAIL:
-
-> MAIL_USER= 
-
-> MAIL_PASS=
-
-> MAIL_PORT=
-
-> MAIL_ADDRESS=
+MAIL_USER=''
+MAIL_PASS=''
+MAIL_PORT=''
+MAIL_ADDRESS=''
+```
