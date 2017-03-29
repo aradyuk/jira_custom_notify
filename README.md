@@ -37,3 +37,11 @@ MAIL_PASS=''
 MAIL_PORT=''
 MAIL_ADDRESS=''
 ```
+### Add to crontab (example) ###
+
+```sh 
+crontab -e
+```
+```
+*/10 * * * * /bin/bash -l -c "cd /$path_to_script && ./main.rb" >> /dev/null 2>&1
+```
