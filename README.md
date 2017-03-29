@@ -12,7 +12,6 @@ ruby 2.3
 `mail`
 `colorize`
 `json`
-`date`
 
 ```sh
 gem install $gem_name
