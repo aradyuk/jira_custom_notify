@@ -43,5 +43,5 @@ MAIL_ADDRESS=''
 crontab -e
 ```
 ```
-*/10 * * * * /bin/bash -l -c "cd /$path_to_script && ./main.rb" >> /dev/null 2>&1
+35 9 * * 1-5 /bin/bash -l -c "cd /$path_to_script && ./main.rb" >> /dev/null 2>&1
 ```
