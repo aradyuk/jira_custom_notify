@@ -78,13 +78,13 @@ issues.each do |i|
 	puts " Assign to:           #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}"
 	puts " Planning start date: #{i.customfield_10100[0..9]}"
 	puts " Date today:          #{date_today}"
-	puts " Link:                http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
+	puts " Link:                http://jira-marketing.*.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues"
 
  puts "\n---------------------------------------"
 
  # Send mail:
  Mail.deliver do
-       to 'aliaksandr.radziuk@altoros.com'
+       to '*@*.com'
      from ENV['MAIL_ADDRESS']
   subject 'Jira-Marketing [Overdue issues]'
      body "
@@ -93,6 +93,6 @@ Issue status:               #{i.status.name}
 Assign to:                   #{i.assignee.present? ? JSON.load(i.assignee.to_json)["displayName"] : "Unassigned"}
 Planning start date:     #{i.customfield_10100[0..9]}
 Date today:                #{date_today}
-Link:                          http://jira-marketing.altoros.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
+Link:                          http://*.*.com/projects/#{i.project.key}/issues/#{i.key}?filter=allopenissues\n"
  end
 end
